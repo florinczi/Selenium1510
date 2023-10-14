@@ -16,7 +16,7 @@ class Crawler (webdriver.Chrome):
         super(Crawler, self).__init__()
         self.implicitly_wait(15)
         self.maximize_window()
-        self._list_of_products = None #This will listy all items from the storepage
+        self._list_of_products = None #This will list all items from the storepage
         self._list_of_cart = None
         self._tested_product = None #This is a particular item selected for further testing
         self._tested_cart_product = None
@@ -25,7 +25,9 @@ class Crawler (webdriver.Chrome):
         self.get(const.FRONTPAGE_URL)
              
 
-    def login(self, user = const.USER, password = const.PASSWORD):
+    
+
+    def login(self, user: str = const.USER, password: str = const.PASSWORD): #remember about restricting types when defining functions
         # This method uses standard credentials from constants.py by default
         usr = self.find_element(By.ID, 'user-name')
         pwd = self.find_element(By.ID, 'password')
@@ -48,11 +50,11 @@ class Crawler (webdriver.Chrome):
 
     def check_for_error_message(self):
         try:
-            self.find_element(By.CLASS_NAME, "error-button")
+            element = self.find_element(By.CLASS_NAME, "error-message-container")
         except common.exceptions.NoSuchElementException as e:
             print (f"{e}, \n\n*****Failed to locate an error message.*****")
         else:
-            print ("Error message located successfully")
+            print (f"Error message:\n\n {element.text} \n\nlocated successfully")
 
     def update_products(self):
         try:
@@ -80,6 +82,8 @@ class Crawler (webdriver.Chrome):
             else: print (f"Searching...")
         if success == False:
             print (f"The product {name} hasn't been found")
+
+        self._list_of_products = None
 
     def add_to_cart(self):
         self._tested_product.find_element(By.CLASS_NAME, "btn").click()

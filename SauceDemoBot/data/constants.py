@@ -9,4 +9,4 @@ USER = "standard_user"
 # error_user
 
 PASSWORD = "secret_sauce"
-INVENTORY_URL = "https://www.saucedemo.com/inventory.html"
+INVENTORY_URL = FRONTPAGE_URL + "/inventory.html"
