@@ -1,27 +1,17 @@
 package floriannowak.projects.chess;
 
+import floriannowak.projects.chess.pieces.*;
+
 public class Board {
 
     
 
-    class Square{
-        private char contains = '.';
+    
+    private Piece[][] boardmap = new Piece [8][8];
 
-        public char getContains() {
-            return contains;
-        }
-
-        public void setContains(char contains) {
-            this.contains = contains;          
-        }
-
-
-    }
-
-    private Square[][] boardmap = new Square [8][8];
-
-    public char getSquare(int x, int y) {
-        return boardmap [x][y].getContains();
+    public char printSquare(int x, int y) {
+        if (boardmap[x][y] == null) return '.';
+        return boardmap [x][y].getShortType();
     }
 
 
@@ -32,32 +22,23 @@ public class Board {
 
     public Board() {   //(int iteration, int depth), future AI
 
-        for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 8; y++) {
-                boardmap[x][y] = new Square();
-            }
-        }
-
-        char[] pieces = {'r', 'n', 'b', 'k', 'q', 'b', 'n', 'r'};
-        
-        for (int i = 0; i < pieces.length; i++){
-            boardmap [7][i].setContains(pieces[i]);
-            boardmap [0][i].setContains(Character.toUpperCase(pieces[i]));
-        }
 
         for (int i = 0; i < 8; i++){
-            boardmap [6][i].setContains('p');
-            boardmap [1][i].setContains('P');
+            boardmap [6][i] = new Pawn(PlayerColor.BLACK, new Coordinates(6, i));
+            boardmap [1][i] = new Pawn(PlayerColor.WHITE, new Coordinates(1, i));
         }
 
     }
 
+    /**
+     * 
+     */
     public void printBoard () {
 
         for (int x = 7; x >= 0; x--)
         {
             for (int y = 0; y < 8; y++){
-                System.out.print(this.boardmap[x][y].getContains() + " ");
+                System.out.print(printSquare(x, y) + " ");
             }
             System.out.print("\n");
         }
