@@ -6,7 +6,7 @@ import floriannowak.projects.chess.Coordinates;
 
 public interface PieceAction {
 
-    boolean isValidMove(int x, int y);
+    boolean isValidMove(Coordinates coordinates);
     Set<Coordinates> checkPossibleMoves();
     void move();
 
