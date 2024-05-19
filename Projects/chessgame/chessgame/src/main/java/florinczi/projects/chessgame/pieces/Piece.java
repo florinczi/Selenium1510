@@ -1,23 +1,41 @@
 package florinczi.projects.chessgame.pieces;
 
+import java.util.List;
+
 import florinczi.projects.chessgame.Board;
 import florinczi.projects.chessgame.Coordinates;
+import florinczi.projects.chessgame.Engine;
+import florinczi.projects.chessgame.MoveCandidate;
 
 public abstract class Piece implements PieceAction{
+  
+    private char shortType; // char representation of the piece on the board
 
-   
+    private Coordinates location; // where is the piece now
+  
+    private PlayerColor player; //whose piece is it
 
-   
+    private Board activeBoard;
 
-    protected Piece (PlayerColor player, Board activeBoard){
-        this.player = player;
+    public void setActiveBoard(Board activeBoard) {
         this.activeBoard = activeBoard;
     }
 
+    private Engine engine;
 
 
-    private char shortType; // char representation of the piece on the board
-  
+    public Engine getEngine() {
+        return engine;
+    }
+
+    protected List<MoveCandidate> possibleMoves;
+
+    protected Piece (PlayerColor player, Engine engine){
+        this.player = player;
+        this.engine = engine;
+        this.activeBoard = engine.getMainBoard();
+    }
+
     public char getShortType() {
         return shortType;
     }
@@ -25,9 +43,6 @@ public abstract class Piece implements PieceAction{
     public void setShortType(char shortType) {
         this.shortType = shortType;
     }
-
-
-    private Coordinates location; // where is the piece now
 
     public Coordinates getLocation() {
         return location;
@@ -37,18 +52,18 @@ public abstract class Piece implements PieceAction{
         this.location = location;
     }
 
-    private PlayerColor player; //whose piece is it
-
     public PlayerColor getPlayer() {
         return player;
     }
 
-    private Board activeBoard;
-
     public Board getActiveBoard() {
         return activeBoard;
     }
-
-   
-
+    
+    public boolean isValidMove(MoveCandidate candidate) {
+    int index = possibleMoves.indexOf(candidate);
+    if (index == -1) 
+        return false; 
+    return true;
+    }
 }
